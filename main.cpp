@@ -56,22 +56,6 @@ struct Object : Value, std::unordered_map<std::string, Value*>
     using std::unordered_map<std::string, Value*>::unordered_map;
 };
 
-struct jsonText
-{
-    jsonText()
-    {
-        f = nullptr;
-        l = nullptr;
-    }
-
-    jsonText(char* first, char* last)
-    {
-        f = first;
-        l = last;
-    }
-    char* f;
-    char* l;
-};
 
 void skip(char*&, char*&);
 Value* Parse(char*&, char*&);
