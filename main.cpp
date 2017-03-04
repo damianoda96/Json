@@ -1,19 +1,15 @@
 #include <iostream>
 #include <vector>
-#include <map>
 #include <unordered_map>
 #include <string>
 #include <cassert>
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <fstream>
-#include <ostream>
-#include <sstream>
-#include <streambuf>
 #include <cstdlib>
+#include <stdio.h>
 
-int weight = 0;
+int weight = 0; //global variable that calculates weight of json file
+
+std::string outputStr;
 
 struct Value
 {
@@ -33,8 +29,8 @@ struct Bool : Value
 
 struct Number : Value
 {
-    Number(double D) : Num(D){}
-    double Num;
+    Number(float D) : Num(D){}
+    float Num;
 };
 
 struct String : Value, std::string
@@ -77,64 +73,79 @@ struct jsonText
     char* l;
 };
 
-char* skip(char*, char*);
-Value* Parse(char*, char*);
-Value* parse_Array(char*, char*);
-Value* parse_Num(char*, char*);
-Value* parse_Object(char*, char*);
-Value* parse_String(char*, char*);
+void skip(char*&, char*&);
+Value* Parse(char*&, char*&);
+Value* parse_Array(char*&, char*&);
+Value* parse_Num(char*&, char*&);
+Value* parse_Object(char*&, char*&);
+Value* parse_String(char*&, char*&);
+Value* parse_True(char*&, char*&);
+Value* parse_False(char*&, char*&);
+Value* parse_NULL(char*&, char*&);
 
-Value* Parse(char* f, char* l)
+Value* Parse(char*& f, char*& l)
 {
     Value* parseVal;
 
-    if(*f == 't')
+    //while parseVal is not returned
+    while(true)
     {
-        Bool * b = new Bool(true);
-        parseVal = b;
-        weight++;
-    }
-    else if(*f == 'f')
-    {
-        Bool * b = new Bool(false);
-        parseVal = b;
-        weight++;
-    }
-    else if(*f == 'n')
-    {
-        parseVal = NULL;
-        weight++;
-    }
-    else if(*f == '"')
-    {
-        weight++;
-        parseVal = parse_String(f,l);
-    }
-     else if(*f == '[')
-    {
-        parseVal = parse_Array(f,l);
-        weight++;
-    }
-    else if(isdigit(*f))
-    {
-       parseVal = parse_Num(f,l);
-       //weight++;
-    }
-    else if(*f == '{')
-    {
-        parseVal = parse_Object(f,l);
-        weight++;
-    }
-    else
-    {
-        f = skip(f,l);
-    }
+        if(*f == 't') //if *char = true;
+        {
+            parseVal = parse_True(f,l);
+            weight++;
+            return parseVal;
+        }
+        else if(*f == 'f') //if *char = false;
+        {
+            parseVal = parse_False(f,l);
+            weight++;
+            return parseVal;
+        }
+        else if(*f == 'n')  //if *char = null;
+        {
+            parseVal = parse_NULL(f,l);
+            weight++;
+            return parseVal;
+        }
+        else if(*f == '"')  //if *char = ";
+        {
+            weight++;
+            printf("string called\n");
+            parseVal = parse_String(f,l);
+            return parseVal;
+        }
+         else if(*f == '[')  //if *char = [;
+        {
+            printf("array called\n");
+            weight++;
+            parseVal = parse_Array(f,l);
+            return parseVal;
+        }
+        else if(isdigit(*f))
+        {
+           parseVal = parse_Num(f,l);
+           weight++;
+           //skip(f,l);
+           return parseVal;
+        }
+        else if(*f == '{')
+        {
+            printf("object called\n");
+            weight++;
+            parseVal = parse_Object(f,l);
+            return parseVal;
+        }
+        else
+        {
+            skip(f, l);
+        }
 
-    return parseVal;
+    }
 
 }
 
-Value* parse_Array(char* f, char* l)
+Value* parse_Array(char*& f, char*& l)
 {
     assert(*f == '[');
     f++;
@@ -146,32 +157,30 @@ Value* parse_Array(char* f, char* l)
         Value* v = Parse(f,l);
 
         a->push_back(v);
+    }
 
-        if(*f == ',')
-        {
-            f++;
-        }
-        else
-        {
-            f = skip(f,l);
-        }
+    if(*f == ']')
+    {
+    std::cout << "found ]" << std::endl;
     }
 
     return a;
 
 }
 
-Value* parse_Object(char* f, char* l)
+Value* parse_Object(char*& f, char*& l)
 {
     assert(*f == '{');
-    f++;
-
     Object * o = new Object();
 
-    while(*f != '}')
+    skip(f,l);
+
+    while(*f!='}')
     {
-       if(*f == '"')
-       {
+
+        if(*f == '"')
+        {
+            printf("found quotation!\n");
             f++;
 
             std::string str;
@@ -181,22 +190,28 @@ Value* parse_Object(char* f, char* l)
                 str += *f;
                 f++;
             }
-            o->emplace(str, Parse(f,l));
+
+            std::cout << str << std::endl;
+
+            weight++;
+
             f++;
-       }
-       else
-       {
-            f = skip(f,l);
-       }
+
+            o->emplace(str, Parse(f,l));
+        }
+        else
+        {
+           skip(f,l);
+        }
+
     }
 
     return o;
-
 }
 
-Value* parse_Num(char* f, char* l)
+Value* parse_Num(char*& f, char*& l)
 {
-    char * temp;
+    std::string temp;
 
     while(isdigit(*f) || *f == '.')
     {
@@ -204,15 +219,15 @@ Value* parse_Num(char* f, char* l)
         f++;
     }
 
-    Number * n = new Number(std::atof(temp));
+    Number * n = new Number(atof(temp.c_str()));
 
-    weight++;
+    std::cout << n->Num  << std::endl;
 
     return n;
 
 }
 
-Value* parse_String(char* f, char* l)
+Value* parse_String(char*& f, char*& l)
 {
     String * str = new String();
 
@@ -220,48 +235,95 @@ Value* parse_String(char* f, char* l)
 
     while(*f != '"')
     {
-        if(*f == '\\')
-        {
-            f+=2;
-        }
-        else
-        {
-            str+=*f;
-            f++;
-        }
+        str+=*f;
+        std::cout << *f;
+        f++;
     }
-    f = skip(f,l);
+
+    f++;
+
     return str;
 
 }
 
-char* skip(char* f, char* l)
+Value* parse_True(char*& f, char*& l)
 {
-    f++;
+    Bool * b = new Bool(true);
 
-    while(f != l && std::isspace(*f))
+    while(*f != 'e')
     {
         f++;
     }
+    f++;
 
-    return f;
+    return b;
+}
+
+Value* parse_False(char*& f, char*& l)
+{
+    Bool * b = new Bool(true);
+
+    while(*f != 'e')
+    {
+        f++;
+    }
+    f++;
+
+    return b;
+}
+
+Value* parse_NULL(char*& f, char*& l)
+{
+    Value* v = NULL;
+
+    while(*f != 'l')
+    {
+        f++;
+    }
+    f++;
+
+    return v;
+}
+
+void skip(char*& f, char*& l)
+{
+    std::cout << "skip called" << std::endl;
+
+    f++;
+
+    while(isspace(*f) || *f == '\n' || *f == '\t' || *f == ',' || *f == ':' || *f == ' ')
+    {
+        printf("true\n");
+        f++;
+    }
 }
 
 int main(int argc, char *argv[])
 {
+    //takes a file name as an argument
+    //std::ifstream file(argv[1]);
     std::ifstream file("jsonFile.json");
     std::string str((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+    if(!file)
+    {
+        std::cout << "File not found\n";
+        return 0;
+    }
+
+    //std::string str = argv[1];
 
     char * first = &str[0];
     char * last = &str[str.size()];
 
-    jsonText jsonFileText;
     char* f = first;
     char* l = last;
 
     Value* parsedJson = Parse(f,l);
 
-    std::cout << "weight: "<< weight;
+    std::cout << "weight: " << weight << std::endl << outputStr;
+
+    std::cout << str;
 
     return 0;
 }

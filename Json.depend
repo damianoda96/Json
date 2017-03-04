@@ -1,17 +1,87 @@
 # depslib dependency file v1.0
-1488162191 source:c:\users\deven\desktop\json\main.cpp
+1488573175 source:c:\users\deven\desktop\json\main.cpp
 	<iostream>
 	<vector>
-	<map>
 	<unordered_map>
 	<string>
 	<cassert>
-	<stdio.h>
-	<stdlib.h>
-	<ctype.h>
 	<fstream>
-	<ostream>
-	<sstream>
-	<streambuf>
 	<cstdlib>
+	<stdio.h>
+
+1487660953 c:\users\deven\desktop\curl-7.53.1-win32-mingw\curl-7.53.1-win32-mingw\include\curl\curl.h
+	"curlver.h"
+	"curlbuild.h"
+	"curlrules.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<support/SupportDefs.h>
+	"easy.h"
+	"multi.h"
+	"typecheck-gcc.h"
+
+1487922605 c:\users\deven\desktop\curl-7.53.1-win32-mingw\curl-7.53.1-win32-mingw\include\curl\curlver.h
+
+1487922605 c:\users\deven\desktop\curl-7.53.1-win32-mingw\curl-7.53.1-win32-mingw\include\curl\curlbuild.h
+	<sys/types.h>
+	<sys/socket.h>
+
+1478510298 c:\users\deven\desktop\curl-7.53.1-win32-mingw\curl-7.53.1-win32-mingw\include\curl\curlrules.h
+
+1484301320 c:\users\deven\desktop\curl-7.53.1-win32-mingw\curl-7.53.1-win32-mingw\include\curl\easy.h
+
+1478510298 c:\users\deven\desktop\curl-7.53.1-win32-mingw\curl-7.53.1-win32-mingw\include\curl\multi.h
+	"curl.h"
+
+1487660953 c:\users\deven\desktop\curl-7.53.1-win32-mingw\curl-7.53.1-win32-mingw\include\curl\typecheck-gcc.h
+
+1488479568 source:c:\users\deven\desktop\json\file.cpp
+	<iostream>
+	<vector>
+	<unordered_map>
+	<string>
+	<cassert>
+	<fstream>
+	<cstdlib>
+
+1488477511 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\ckhttp.h
+	"chilkatDefs.h"
+	"CkString.h"
+	"CkClassWithCallbacks.h"
+
+1488477509 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\chilkatdefs.h
+	"ck_inttypes.h"
+	"SystemTime.h"
+	"FileTime.h"
+
+1488477515 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\ck_inttypes.h
+	<inttypes.h>
+	<stdint.h>
+	<cstdint>
+	<inttypes.h>
+
+1488477519 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\systemtime.h
+
+1488477519 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\filetime.h
+
+1488477514 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\ckstring.h
+	"chilkatDefs.h"
+	"CkObject.h"
+
+1488477512 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\ckobject.h
+	"chilkatDefs.h"
+
+1488477510 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\ckclasswithcallbacks.h
+	"CkMultiByteBase.h"
+
+1488477512 c:\users\deven\desktop\chilkat-9.5.0-mingw64-32-4.7.2\chilkat-9.5.0-mingw64-32-4.7.2\include\ckmultibytebase.h
+	"CkObject.h"
 
