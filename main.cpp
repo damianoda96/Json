@@ -284,9 +284,9 @@ void skip(char*& f, char*& l)
 
 int main(int argc, char *argv[])
 {
-    //takes a file name as an argument
-    //std::ifstream file(argv[1]);
-    std::ifstream file("jsonFile.json");
+    //takes a file address name as an argument
+    std::ifstream file(argv[1]);
+    //std::ifstream file("jsonFile.json");
     std::string str((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
     if(!file)
