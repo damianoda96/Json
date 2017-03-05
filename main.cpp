@@ -95,13 +95,13 @@ Value* Parse(char*& f, char*& l)
         else if(*f == '"')  //if *char = ";
         {
             weight++;
-            printf("string called\n");
+            //printf("string called\n");
             parseVal = parse_String(f,l);
             return parseVal;
         }
          else if(*f == '[')  //if *char = [;
         {
-            printf("array called\n");
+            //printf("array called\n");
             weight++;
             parseVal = parse_Array(f,l);
             return parseVal;
@@ -115,7 +115,7 @@ Value* Parse(char*& f, char*& l)
         }
         else if(*f == '{')
         {
-            printf("object called\n");
+            //printf("object called\n");
             weight++;
             parseVal = parse_Object(f,l);
             return parseVal;
@@ -143,10 +143,10 @@ Value* parse_Array(char*& f, char*& l)
         a->push_back(v);
     }
 
-    if(*f == ']')
+    /*if(*f == ']')
     {
     std::cout << "found ]" << std::endl;
-    }
+    }*/
 
     return a;
 
@@ -164,7 +164,7 @@ Value* parse_Object(char*& f, char*& l)
 
         if(*f == '"')
         {
-            printf("found quotation!\n");
+            //printf("found quotation!\n");
             f++;
 
             std::string str;
@@ -175,7 +175,7 @@ Value* parse_Object(char*& f, char*& l)
                 f++;
             }
 
-            std::cout << str << std::endl;
+            //std::cout << str << std::endl;
 
             weight++;
 
@@ -205,7 +205,7 @@ Value* parse_Num(char*& f, char*& l)
 
     Number * n = new Number(atof(temp.c_str()));
 
-    std::cout << n->Num  << std::endl;
+    //std::cout << n->Num  << std::endl;
 
     return n;
 
@@ -220,7 +220,7 @@ Value* parse_String(char*& f, char*& l)
     while(*f != '"')
     {
         str+=*f;
-        std::cout << *f;
+        //std::cout << *f;
         f++;
     }
 
@@ -271,13 +271,13 @@ Value* parse_NULL(char*& f, char*& l)
 
 void skip(char*& f, char*& l)
 {
-    std::cout << "skip called" << std::endl;
+    //std::cout << "skip called" << std::endl;
 
     f++;
 
     while(isspace(*f) || *f == '\n' || *f == '\t' || *f == ',' || *f == ':' || *f == ' ')
     {
-        printf("true\n");
+        //printf("true\n");
         f++;
     }
 }
@@ -307,7 +307,7 @@ int main(int argc, char *argv[])
 
     std::cout << "weight: " << weight << std::endl << outputStr;
 
-    std::cout << str;
+    //std::cout << str;
 
     return 0;
 }
